@@ -1,0 +1,51 @@
+#!/usr/bin/env node
+'use strict';
+var cli = require('cli');
+var fs = require('fs');
+var hash = require('..');
+
+cli
+    .enable('version', 'autocomplete', 'help', 'glob')
+    .setApp(__dirname + '/../package.json')
+    .setUsage(cli.app + ' [OPTIONS] [file] filename-pattern')
+    .parse({
+        digest: [
+            'd',
+            'Digest Type (e.g. md5, sha1, sha256, sha512)',
+            'string',
+            'sha256'
+        ],
+        length: [
+            'l',
+            'Limit the digest to this many characters (0 for unlimited)',
+            'number',
+            0
+        ],
+        silent: [
+            's',
+            'Do not log any output',
+            'boolean',
+            false
+        ]
+    });
+
+if (!cli.args.length) {
+    cli.getUsage(1);
+} else {
+    cli.options.file = cli.args.pop();
+    var stream = process.stdin;
+    if (cli.args.length) {
+        stream = fs.createReadStream(cli.args[0]);
+    }
+    hash(stream, cli.options, function (err, hash) {
+        if (err) {
+            throw err;
+        }
+        // Output hash
+        if (!cli.options.silent) {
+            process.stderr.write('Computed hash: ');
+            process.stdout.write(hash);
+            process.stderr.write('\n');
+        }
+    });
+}
