@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Take contents of a file (or stdin), and output as new file with a hash in the name",
   "main": "index.js",
+  "bin": {
+    "hashmark": "./bin/hashmark"
+  },
   "scripts": {
     "test1": "echo Foo | ./bin/hashmark 'test.#.js' && rm test.3eae1599bb7f187b86d6427942d172ba8dd7ee5962aab03e0839ad9d59c37eb0.js",
     "test2": "echo Foo | ./bin/hashmark -l 8 'test.#.js' && rm test.3eae1599.js",
