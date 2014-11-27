@@ -32,6 +32,12 @@ cli
             'Name of a file to write an asset map to',
             'string',
             null
+        ],
+        'name': [
+            'n',
+            'If passing stdin, use this flag to force a name for the file',
+            'string',
+            null
         ]
     });
 
@@ -39,7 +45,10 @@ if (!cli.args.length) {
     cli.getUsage(1);
 } else {
     cli.options.pattern = cli.args.pop();
-    var files = [process.stdin];
+    var files = process.stdin;
+    if (cli.options.name) {
+        files.fileName = cli.options.name;
+    }
     if (cli.args.length) {
         files = cli.glob.sync(cli.args[0]);
     }

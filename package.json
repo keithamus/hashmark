@@ -18,7 +18,8 @@
     "test9": "echo Foo > test.js && ./bin/hashmark -d md5 -l 8 test.js 'test.{hash}' && rm test.js test.cbd8f798",
     "test10": "echo Test1 > test.js && echo Test2 > test2.js && ./bin/hashmark -d md5 -l 4 'test*.js' '{name}-{hash}{ext}' && rm test.js test2.js test-fa02.js test2-856b.js",
     "test11": "echo Test1 > test.js && echo Test2 > test2.js && ./bin/hashmark -l 4 'test*.js' '{name}-{hash}{ext}' -m testmap.json && rm test.js test2.js test-7e5e.js test2-1a65.js testmap.json",
-    "test": "for i in {1..11}; do npm run test$i; done"
+    "test12": "echo Test1 | ./bin/hashmark -l 4 -n test.js '{name}-{hash}{ext}' && rm test-7e5e.js",
+    "test": "for i in {1..12}; do npm run test$i; done"
   },
   "author": "Keith Cirkel (http://keithcirkel.co.uk)",
   "license": "MIT",

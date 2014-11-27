@@ -35,7 +35,7 @@ module.exports = function hashmark(contents, options, callback) {
     }
     contents.map(function (contents) {
         if (contents instanceof Stream.Readable) {
-            contents.fileName = '';
+            contents.fileName = contents.fileName || '<anonymous>';
             return contents;
         } else {
             var stream = fs.createReadStream(contents);
