@@ -32,15 +32,12 @@ cli
 if (!cli.args.length) {
     cli.getUsage(1);
 } else {
-    cli.options.file = cli.args.pop();
-    var stream = process.stdin;
+    cli.options.pattern = cli.args.pop();
+    var files = [process.stdin];
     if (cli.args.length) {
-        stream = fs.createReadStream(cli.args[0]);
+        files = cli.glob.sync(cli.args[0]);
     }
-    hash(stream, cli.options, function (err, hash) {
-        if (err) {
-            throw err;
-        }
+    hash(files, cli.options).on('end', function (map) {
         // Output hash
         if (!cli.options.silent) {
             process.stderr.write('Computed hash: ');
