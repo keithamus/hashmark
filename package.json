@@ -7,16 +7,18 @@
     "hashmark": "./bin/hashmark"
   },
   "scripts": {
-    "test1": "echo Foo | ./bin/hashmark 'test.#.js' && rm test.3eae1599bb7f187b86d6427942d172ba8dd7ee5962aab03e0839ad9d59c37eb0.js",
-    "test2": "echo Foo | ./bin/hashmark -l 8 'test.#.js' && rm test.3eae1599.js",
-    "test3": "echo Bar | ./bin/hashmark -l 8 'test.#.js' && rm test.842c8886.js",
-    "test4": "echo Bar | ./bin/hashmark --length 8 'test.#.js' && rm test.842c8886.js",
-    "test5": "echo Foo | ./bin/hashmark -d md5 'test.#.js' && rm test.cbd8f7984c654c25512e3d9241ae569f.js",
-    "test6": "echo Foo | ./bin/hashmark --digest md5 'test.#.js' && rm test.cbd8f7984c654c25512e3d9241ae569f.js",
-    "test7": "echo Foo | ./bin/hashmark -d md5 -l 8  'test.#.js' && rm test.cbd8f798.js",
-    "test8": "echo Bar | ./bin/hashmark -d md5 -l 8  'test.#.js' && rm test.962d3beb.js",
-    "test9": "echo Foo > test.js && ./bin/hashmark -d md5 -l 8 test.js 'test.#' && rm test.js test.cbd8f798",
-    "test": "for i in {1..9}; do npm run test$i; done"
+    "test1": "echo Foo | ./bin/hashmark 'test.{hash}.js' && rm test.3eae1599bb7f187b86d6427942d172ba8dd7ee5962aab03e0839ad9d59c37eb0.js",
+    "test2": "echo Foo | ./bin/hashmark -l 8 'test.{hash}.js' && rm test.3eae1599.js",
+    "test3": "echo Bar | ./bin/hashmark -l 8 'test.{hash}.js' && rm test.842c8886.js",
+    "test4": "echo Bar | ./bin/hashmark --length 8 'test.{hash}.js' && rm test.842c8886.js",
+    "test5": "echo Foo | ./bin/hashmark -d md5 'test.{hash}.js' && rm test.cbd8f7984c654c25512e3d9241ae569f.js",
+    "test6": "echo Foo | ./bin/hashmark --digest md5 '{hash}.js' && rm cbd8f7984c654c25512e3d9241ae569f.js",
+    "test7": "echo Foo | ./bin/hashmark -d md5 -l 8  'test.{hash}.js' && rm test.cbd8f798.js",
+    "test8": "echo Bar | ./bin/hashmark -d md5 -l 8  'test.{hash}.js' && rm test.962d3beb.js",
+    "test9": "echo Foo > test.js && ./bin/hashmark -d md5 -l 8 test.js 'test.{hash}' && rm test.js test.cbd8f798",
+    "test10": "echo Test1 > test.js && echo Test2 > test2.js && ./bin/hashmark -d md5 -l 4 'test*.js' '{name}-{hash}{ext}' && rm test.js test2.js test-fa02.js test2-856b.js",
+    "test11": "echo Test1 > test.js && echo Test2 > test2.js && ./bin/hashmark -l 4 'test*.js' '{name}-{hash}{ext}' -m testmap.json && rm test.js test2.js test-7e5e.js test2-1a65.js testmap.json",
+    "test": "for i in {1..11}; do npm run test$i; done"
   },
   "author": "Keith Cirkel (http://keithcirkel.co.uk)",
   "license": "MIT",
