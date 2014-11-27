@@ -26,6 +26,12 @@ cli
             'Do not log any output',
             'boolean',
             false
+        ],
+        'asset-map': [
+            'm',
+            'Name of a file to write an asset map to',
+            'string',
+            null
         ]
     });
 
@@ -40,9 +46,17 @@ if (!cli.args.length) {
     hash(files, cli.options).on('end', function (map) {
         // Output hash
         if (!cli.options.silent) {
-            process.stderr.write('Computed hash: ');
-            process.stdout.write(hash);
-            process.stderr.write('\n');
+            process.stdout.write(JSON.stringify(map));
+        }
+        if (cli.options['asset-map']) {
+            if (fs.existsSync(cli.options['asset-map'])) {
+                var assetMap = JSON.parse(fs.readFileSync(cli.options['asset-map']));
+                Object.keys(assetMap).reduce(function (map, key) {
+                    map[key] = assetMap[key];
+                    return map;
+                }, map);
+            }
+            fs.writeFileSync(cli.options['asset-map'], JSON.stringify(map, null, 2));
         }
     });
 }
