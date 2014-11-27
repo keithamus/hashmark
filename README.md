@@ -10,30 +10,39 @@ headers and when the code changes, a new filename is created.
 ### Shell
 
 ```bash
-cat file.js | ./bin/hashmark 'file.#.js' # Writes to test.3eae1599bb7f187b86d6427942d172ba8dd7ee5962aab03e0839ad9d59c37eb0.js
+cat file.js | ./bin/hashmark 'file.{hash}.js' # Writes to test.3eae1599bb7f187b86d6427942d172ba8dd7ee5962aab03e0839ad9d59c37eb0.js
 > Computed hash: 3eae1599bb7f187b86d6427942d172ba8dd7ee5962aab03e0839ad9d59c37eb0
 >
-cat file.js | ./bin/hashmark -l 8 'file.#.js' # Writes to test.3eae1599.js
+cat file.js | ./bin/hashmark -l 8 'file.{hash}.js' # Writes to test.3eae1599.js
 > Computed hash: 3eae1599
 >
-cat file.js | ./bin/bashmark -l 4 -d md5 'dist/#.js' # Writes to dist/cbd8f798.js
+cat file.js | ./bin/bashmark -l 4 -d md5 'dist/{hash}.js' # Writes to dist/cbd8f798.js
 > Computed hash: cbd8f798
 >
 ```
-
-The `hashmark` command will output the hash to stdout (and some friendly text to
-stderr), meaning you can pipe the hash to other programs. To make `hashmark`
-completely silent - simply pass the `--silent` or `-s` flag.
+`hashmark` also supports file globs - meaning you can read in many files and it
+will output hashed versions of each:
 
 ```bash
-cat file.js | ./bin/bashmark -l 4 'dist/#.js' --silent
+./bin/bashmark path/to/*.js 'dist/{name}.{hash}.js'
+./bin/bashmark path/to/{filea,fileb,filec}.js 'dist/{name}.{hash}.js'
+./bin/bashmark **.js 'dist/{dir}/{name}.{hash}.js'
+./bin/bashmark **.{js,css} 'dist/{dir}/{name}.{hash}.{ext}'
 ```
 
-If you want just the hash - without the friendly text, just redirect stderr:
+The `hashmark` command will output the some JSON stdout with a map of filenames
+and their new hashes, meaning you can pipe the hash to other programs. To make
+`hashmark` completely silent - simply pass the `--silent` or `-s` flag.
 
 ```bash
-cat file.js | ./bin/bashmark -l 4 'dist/#.js' 2> /dev/null
-> 3eae
+./bin/bashmark -l 4 file.js 'dist/{hash}.js' --silent
+```
+
+You can also output the JSON map to a file, by passing the `--asset-map` or `-m`
+flag. It will still be logged to stdout unless you pass `--silent`
+
+```bash
+./bin/bashmark -l 4 file.js 'dist/{hash}.js' --asset-map assets.json
 ```
 
 ### Progamatically
@@ -42,39 +51,48 @@ The hashmark function can be used programatically. You can pass it a String,
 Buffer or Stream as the first argument, an options object as the second
 argument, and a callback as the third.
 
-The callback receives an error as the first argument (or null) and the hash
-digest as the second argument.
+The callback receives an error as the first argument (or null) and an object
+which maps each given file to the newly hashed file name.
 
 ```js
 var hashmark = require('hashmark');
 var file = fs.createReadStream('file.js');
 
-hashmark(file, { length: 8, digest: 'md5'}, function (err, hash) {
-    console.log(hash);
+hashmark(file, { length: 8, digest: 'md5', 'pattern': '{hash}'}, function (err, map) {
+    console.log(map);
 });
 ```
 
-If you pass in the `file` option, then hashmark will write to the filesystem
-at that filename (replacing `#` with the hash). Without the `file` option - it
-will not write anything to the filesystem.
+The function also returns an event emitter which emits `error`, `file` and `end`
+events. File events get fired when an individual file has been hashed, and the
+`end` event is fired when all have been done. `file` is given two arguments -
+the files old name, and the new calculated filename (given the template string),
+and the `end` event is given an object mapping of all files.
 
 ```js
 var hashmark = require('hashmark');
 var file = fs.createReadStream('file.js');
 
-hashmark(file, { length: 8, digest: 'md5', file: 'file.#.js'}, function (err, hash) {
+hashmark(file, { length: 8, digest: 'md5', pattern: 'hash'})
+    .on('file', function (oldFileName, newFileName) {
+        console.log('File hashed!', oldFileName, newFileName);
+    })
+    .on('end', function (jsonMap) {
+        console.log('~FIN');
+    })
+```
+
+Files can be a single Stream, or filename String, or an Array of Streams and/or
+filename Strings. Globbing is not supported here (the globbing functionality
+lives in the command line).
+
+```js
+var hashmark = require('hashmark');
+var file = fs.createReadStream('file.js');
+
+hashmark([file, 'file2.js'], { length: 8, digest: 'md5', file: 'file.#.js'}, function (err, hash) {
     console.log('File written to file.' + hash + '.js');
     console.log(hash);
-});
-```
-
-You can omit the entire options object, to resort to default behavior. This will
-behave a bit like a simple `sha256` function.
-
-```js
-var hashmark = require('hashmark');
-hashmark('Foo', function (err, hash) {
-    console.log('"Foo" hashed is ' + hash);
 });
 ```
 
