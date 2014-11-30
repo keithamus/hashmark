@@ -1,6 +1,6 @@
 {
   "name": "hashmark",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "Take contents of a file (or stdin), and output as new file with a hash in the name",
   "main": "index.js",
   "bin": {
