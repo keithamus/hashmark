@@ -61,7 +61,7 @@ if (!cli.args.length) {
             if (fs.existsSync(cli.options['asset-map'])) {
                 var assetMap = JSON.parse(fs.readFileSync(cli.options['asset-map']));
                 Object.keys(assetMap).reduce(function (map, key) {
-                    map[key] = assetMap[key];
+                    map[key] = map[key] || assetMap[key];
                     return map;
                 }, map);
             }
