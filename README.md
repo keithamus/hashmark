@@ -16,7 +16,7 @@ cat file.js | ./bin/hashmark 'file.{hash}.js' # Writes to test.3eae1599bb7f187b8
 cat file.js | ./bin/hashmark -l 8 'file.{hash}.js' # Writes to test.3eae1599.js
 > Computed hash: 3eae1599
 >
-cat file.js | ./bin/bashmark -l 4 -d md5 'dist/{hash}.js' # Writes to dist/cbd8f798.js
+cat file.js | ./bin/hashmark -l 4 -d md5 'dist/{hash}.js' # Writes to dist/cbd8f798.js
 > Computed hash: cbd8f798
 >
 ```
@@ -24,10 +24,10 @@ cat file.js | ./bin/bashmark -l 4 -d md5 'dist/{hash}.js' # Writes to dist/cbd8f
 will output hashed versions of each:
 
 ```bash
-./bin/bashmark path/to/*.js 'dist/{name}.{hash}.js'
-./bin/bashmark path/to/{filea,fileb,filec}.js 'dist/{name}.{hash}.js'
-./bin/bashmark **.js 'dist/{dir}/{name}.{hash}.js'
-./bin/bashmark **.{js,css} 'dist/{dir}/{name}.{hash}.{ext}'
+./bin/hashmark path/to/*.js 'dist/{name}.{hash}.js'
+./bin/hashmark path/to/{filea,fileb,filec}.js 'dist/{name}.{hash}.js'
+./bin/hashmark **.js 'dist/{dir}/{name}.{hash}.js'
+./bin/hashmark **.{js,css} 'dist/{dir}/{name}.{hash}.{ext}'
 ```
 
 The `hashmark` command will output the some JSON stdout with a map of filenames
@@ -35,14 +35,14 @@ and their new hashes, meaning you can pipe the hash to other programs. To make
 `hashmark` completely silent - simply pass the `--silent` or `-s` flag.
 
 ```bash
-./bin/bashmark -l 4 file.js 'dist/{hash}.js' --silent
+./bin/hashmark -l 4 file.js 'dist/{hash}.js' --silent
 ```
 
 You can also output the JSON map to a file, by passing the `--asset-map` or `-m`
 flag. It will still be logged to stdout unless you pass `--silent`
 
 ```bash
-./bin/bashmark -l 4 file.js 'dist/{hash}.js' --asset-map assets.json
+./bin/hashmark -l 4 file.js 'dist/{hash}.js' --asset-map assets.json
 ```
 
 ### Progamatically
