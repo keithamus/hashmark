@@ -16,8 +16,8 @@ cat file.js | ./bin/hashmark 'file.{hash}.js' # Writes to test.3eae1599bb7f187b8
 cat file.js | ./bin/hashmark -l 8 'file.{hash}.js' # Writes to test.3eae1599.js
 > Computed hash: 3eae1599
 >
-cat file.js | ./bin/hashmark -l 4 -d md5 'dist/{hash}.js' # Writes to dist/cbd8f798.js
-> Computed hash: cbd8f798
+cat file.js | ./bin/hashmark -l 4 -d md5 'dist/{hash}.js' # Writes to dist/cbd8.js
+> Computed hash: cbd8
 >
 ```
 `hashmark` also supports file globs - meaning you can read in many files and it
