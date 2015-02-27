@@ -45,7 +45,7 @@ flag. It will still be logged to stdout unless you pass `--silent`
 ./bin/hashmark -l 4 file.js 'dist/{hash}.js' --asset-map assets.json
 ```
 
-### Progamatically
+### Programatically
 
 The hashmark function can be used programatically. You can pass it a String,
 Buffer or Stream as the first argument, an options object as the second
