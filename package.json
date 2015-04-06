@@ -1,6 +1,6 @@
 {
   "name": "hashmark",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Take contents of a file (or stdin), and output as new file with a hash in the name",
   "main": "index.js",
   "bin": {
@@ -27,7 +27,7 @@
     "cli": "^0.6.5"
   },
   "repository": {
-    "type" : "git",
-    "url" : "http://github.com/keithamus/hashmark.git"
+    "type": "git",
+    "url": "http://github.com/keithamus/hashmark.git"
   }
 }
