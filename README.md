@@ -30,6 +30,14 @@ will output hashed versions of each:
 ./bin/hashmark **.{js,css} 'dist/{dir}/{name}.{hash}.{ext}'
 ```
 
+Note that when using Bash you may need to enclose some arguments in quotes in order to pass them literally to hashmark. For example, this is necessary when using an earlier verion of Bash than version 4 and trying to pass a recursive glob (**) in the source argument. Without quotes, Bash (previously to version 4) swallows the double glob and interprets it as a single glob. With quotes, the double asterisks are passed literally to hashmark, and the glob module interprets them correctly as a recursive wildcard. [See Bash manual](https://www.gnu.org/software/bash/manual/bash.html#Single-Quotes)
+
+Example:
+
+```bash
+./bin/hashmark '**.{js,css}' 'dist/{dir}/{name}.{hash}.{ext}'
+```
+
 The `hashmark` command will output the some JSON stdout with a map of filenames
 and their new hashes, meaning you can pipe the hash to other programs. To make
 `hashmark` completely silent - simply pass the `--silent` or `-s` flag.
