@@ -27,7 +27,7 @@ will output hashed versions of each:
 ./bin/hashmark path/to/*.js 'dist/{name}.{hash}.js'
 ./bin/hashmark path/to/{filea,fileb,filec}.js 'dist/{name}.{hash}.js'
 ./bin/hashmark **.js 'dist/{dir}/{name}.{hash}.js'
-./bin/hashmark **.{js,css} 'dist/{dir}/{name}.{hash}.{ext}'
+./bin/hashmark **.{js,css} 'dist/{dir}/{name}.{hash}{ext}'
 ```
 
 Note that when using Bash you may need to enclose some arguments in quotes in order to pass them literally to hashmark. For example, this is necessary when using an earlier verion of Bash than version 4 and trying to pass a recursive glob (**) in the source argument. Without quotes, Bash (previously to version 4) swallows the double glob and interprets it as a single glob. With quotes, the double asterisks are passed literally to hashmark, and the glob module interprets them correctly as a recursive wildcard. [See Bash manual](https://www.gnu.org/software/bash/manual/bash.html#Single-Quotes)
@@ -35,7 +35,7 @@ Note that when using Bash you may need to enclose some arguments in quotes in or
 Example:
 
 ```bash
-./bin/hashmark '**.{js,css}' 'dist/{dir}/{name}.{hash}.{ext}'
+./bin/hashmark '**.{js,css}' 'dist/{dir}/{name}.{hash}{ext}'
 ```
 
 The `hashmark` command will output the some JSON stdout with a map of filenames
