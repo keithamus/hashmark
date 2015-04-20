@@ -38,7 +38,13 @@ cli
             'If passing stdin, use this flag to force a name for the file',
             'string',
             null
-        ]
+        ],
+        'rename': [
+            'r',
+            'Rename input files with hash rather than creating hashed copies',
+            'boolean',
+            false
+        ],
     });
 
 if (!cli.args.length) {

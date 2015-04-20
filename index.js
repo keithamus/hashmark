@@ -62,12 +62,23 @@ module.exports = function hashmark(contents, options, callback) {
             }
             if (options.pattern) {
                 var fileName = parseFilePattern(options.pattern, stream.fileName, digest);
-                fs.writeFile(fileName, contents, function (err) {
-                    if (err) {
-                        return mapEvents.emit('error', err);
-                    }
-                    mapEvents.emit('file', stream.fileName, fileName);
-                });
+
+                if (options.rename === true ) {
+                    fs.rename(stream.fileName, fileName, function (err) {
+                        if (err) {
+                            return mapEvents.emit('error', err);
+                        }
+                        mapEvents.emit('file', stream.fileName, fileName);
+                    });
+                } else {
+                    fs.writeFile(fileName, contents, function (err) {
+                        if (err) {
+                            return mapEvents.emit('error', err);
+                        }
+                        mapEvents.emit('file', stream.fileName, fileName);
+                    });
+                }
+
             } else {
                 mapEvents.emit('file', stream.fileName, digest);
             }
