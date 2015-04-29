@@ -38,7 +38,7 @@ Example:
 ./bin/hashmark '**.{js,css}' 'dist/{dir}/{name}.{hash}{ext}'
 ```
 
-The `hashmark` command will output the some JSON stdout with a map of filenames
+The `hashmark` command will output some JSON to stdout with a map of filenames
 and their new hashes, meaning you can pipe the hash to other programs. To make
 `hashmark` completely silent - simply pass the `--silent` or `-s` flag.
 
@@ -91,8 +91,7 @@ hashmark(file, { length: 8, digest: 'md5', pattern: 'hash'})
 ```
 
 Files can be a single Stream, or filename String, or an Array of Streams and/or
-filename Strings. Globbing is not supported here (the globbing functionality
-lives in the command line).
+filename Strings.
 
 ```js
 var hashmark = require('hashmark');
