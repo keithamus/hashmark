@@ -56,7 +56,9 @@ if (!cli.args.length) {
         files.fileName = cli.options.name;
     }
     if (cli.args.length) {
-        files = cli.glob.sync(cli.args[0]);
+        files = cli.args.reduce(function(files, pattern) {
+            return files.concat(cli.glob.sync(pattern));
+        }, []);
     }
     hash(files, cli.options).on('end', function (map) {
         // Output hash
