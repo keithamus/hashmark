@@ -20,8 +20,9 @@ cat file.js | ./bin/hashmark -l 4 -d md5 'dist/{hash}.js' # Writes to dist/cbd8.
 > Computed hash: cbd8
 >
 ```
-`hashmark` also supports file globs - meaning you can read in many files and it
-will output hashed versions of each:
+
+It is useful to use globs—meaning you can read in many files and it will output
+hashed versions of each:
 
 ```bash
 ./bin/hashmark path/to/*.js 'dist/{name}.{hash}.js'
@@ -30,12 +31,16 @@ will output hashed versions of each:
 ./bin/hashmark **.{js,css} 'dist/{dir}/{name}.{hash}{ext}'
 ```
 
-Note that when using Bash you may need to enclose some arguments in quotes in order to pass them literally to hashmark. For example, this is necessary when using an earlier verion of Bash than version 4 and trying to pass a recursive glob (**) in the source argument. Without quotes, Bash (previously to version 4) swallows the double glob and interprets it as a single glob. With quotes, the double asterisks are passed literally to hashmark, and the glob module interprets them correctly as a recursive wildcard. [See Bash manual](https://www.gnu.org/software/bash/manual/bash.html#Single-Quotes)
-
-Example:
+The above even works in shells that do not support globs (such as cmd.exe on
+Windows), because `hashmark` has support for expanding globs itself. Note that
+if your shell supports the `*` glob but not the `**` glob (such as bash before
+version 4), the shell will interpret `**` as two `*` in a row, which means that
+hashmark never receives the `**` and therefore cannot expand it. In that case
+you need to quote your argument. Therefore, if you want to write cross-platform
+scripts it is best to always quote the args:
 
 ```bash
-./bin/hashmark '**.{js,css}' 'dist/{dir}/{name}.{hash}{ext}'
+./bin/hashmark 'dir/**.{js,css}' 'test/*.js' 'dist/{dir}/{name}.{hash}{ext}'
 ```
 
 The `hashmark` command will output some JSON to stdout with a map of filenames
