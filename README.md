@@ -27,8 +27,8 @@ hashed versions of each:
 ```bash
 ./bin/hashmark path/to/*.js 'dist/{name}.{hash}.js'
 ./bin/hashmark path/to/{filea,fileb,filec}.js 'dist/{name}.{hash}.js'
-./bin/hashmark **.js 'dist/{dir}/{name}.{hash}.js'
-./bin/hashmark **.{js,css} 'dist/{dir}/{name}.{hash}{ext}'
+./bin/hashmark **/*.js 'dist/{dir}/{name}.{hash}.js'
+./bin/hashmark **/*.{js,css} 'dist/{dir}/{name}.{hash}{ext}'
 ```
 
 The above even works in shells that do not support globs (such as cmd.exe on
@@ -40,7 +40,7 @@ you need to quote your argument. Therefore, if you want to write cross-platform
 scripts it is best to always quote the args:
 
 ```bash
-./bin/hashmark 'dir/**.{js,css}' 'test/*.js' 'dist/{dir}/{name}.{hash}{ext}'
+./bin/hashmark 'dir/**/*.{js,css}' 'test/*.js' 'dist/{dir}/{name}.{hash}{ext}'
 ```
 
 The `hashmark` command will output some JSON to stdout with a map of filenames
