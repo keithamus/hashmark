@@ -21,7 +21,7 @@ cat file.js | ./bin/hashmark -l 4 -d md5 'dist/{hash}.js' # Writes to dist/cbd8.
 >
 ```
 
-It is useful to use globs—meaning you can read in many files and it will output
+It is useful to use globs — meaning you can read in many files and it will output
 hashed versions of each:
 
 ```bash
