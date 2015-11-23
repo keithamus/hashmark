@@ -58,6 +58,15 @@ flag. It will still be logged to stdout unless you pass `--silent`
 ./bin/hashmark -l 4 file.js 'dist/{hash}.js' --asset-map assets.json
 ```
 
+You can specify from which directory to work from with `--cwd` or `-c`. _Note:_ `asset-map` will be relative to this directory.
+
+```bash
+mkdir dist/subdir
+echo 'abracadabra' > dist/subdir/file.js
+./bin/hashmark --cwd dist -d md5 -l 8 '**/*.js' '{dir}/{name}-{hash}{ext}'
+> {"subdir/file.js":"subdir/file-97640ef5.js"}
+```
+
 ### Programmatically
 
 The hashmark function can be used programmatically. You can pass it a String,

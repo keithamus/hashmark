@@ -86,7 +86,7 @@ module.exports = function hashmark(contents, options, callback) {
         stream.pipe(hash, { end: false });
     });
     return mapEvents.on('file', function (fileName, newFileName) {
-        map[fileName] = newFileName;
+        map[path.relative(options.cwd, fileName)] = path.relative(options.cwd, newFileName);
         fileCount--;
         if (fileCount === 0) {
             mapEvents.emit('end', map);

@@ -3,6 +3,7 @@
 var cli = require('cli');
 var fs = require('fs');
 var hash = require('..');
+var path = require('path');
 
 cli
     .enable('version', 'autocomplete', 'help', 'glob')
@@ -14,6 +15,12 @@ cli
             'Digest Type (e.g. md5, sha1, sha256, sha512)',
             'string',
             'sha256'
+        ],
+        cwd: [
+            'c',
+            'Resolve path names from this directory',
+            'string',
+            '.'
         ],
         length: [
             'l',
@@ -57,7 +64,7 @@ if (!cli.args.length) {
     }
     if (cli.args.length) {
         files = cli.args.reduce(function(files, pattern) {
-            return files.concat(cli.glob.sync(pattern));
+            return files.concat(cli.glob.sync(path.join(cli.options.cwd, pattern)));
         }, []);
     }
     hash(files, cli.options).on('end', function (map) {
