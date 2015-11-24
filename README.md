@@ -31,6 +31,7 @@ hashed versions of each:
 ./bin/hashmark path/to/{filea,fileb,filec}.js 'dist/{name}.{hash}.js'
 ./bin/hashmark **/*.js 'dist/{dir}/{name}.{hash}.js'
 ./bin/hashmark **/*.{js,css} 'dist/{dir}/{name}.{hash}{ext}'
+./bin/hashmark **/*.{js,css} 'dist/{dir}/{hash}-{base}'
 ```
 
 The above even works in shells that do not support globs (such as cmd.exe on
@@ -40,6 +41,8 @@ version 4), the shell will interpret `**` as two `*` in a row, which means that
 hashmark never receives the `**` and therefore cannot expand it. In that case
 you need to quote your argument. Therefore, if you want to write cross-platform
 scripts it is best to always quote the args:
+
+Available pattern keys includes all the keys returned by [`path.parse(filename)`](https://nodejs.org/api/path.html#path_path_parse_pathstring) and `hash` (ie: `hash`, `root`, `dir`, `name`, `base`, `ext`).
 
 ```bash
 ./bin/hashmark 'dir/**/*.{js,css}' 'test/*.js' 'dist/{dir}/{name}.{hash}{ext}'
