@@ -58,6 +58,21 @@ flag. It will still be logged to stdout unless you pass `--silent`
 ./bin/hashmark -l 4 file.js 'dist/{hash}.js' --asset-map assets.json
 ```
 
+You can specify from which directory to work from with `--cwd` or `-c`. _Note:_ `asset-map` will be relative to this directory.
+
+```bash
+mkdir dist/subdir
+echo 'abracadabra' > dist/subdir/file.js
+./bin/hashmark --cwd dist -d md5 -l 8 '**/*.js' '{dir}/{name}-{hash}{ext}'
+> {"subdir/file.js":"subdir/file-97640ef5.js"}
+```
+
+### Integrations
+
+**[replaceinfiles](https://github.com/songkick/replaceinfiles)**
+
+Now that your assets have been renamed, you might want to update references to them in some other files _(ex:background image reference in your css files)_. That's exactly what `replaceinfiles` is made for. Just pipe it to `hashmark`. _It just work™._ [Full example](https://github.com/songkick/replaceinfiles/tree/master/examples/hashmark).
+
 ### Programmatically
 
 The hashmark function can be used programmatically. You can pass it a String,
