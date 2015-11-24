@@ -67,6 +67,12 @@ echo 'abracadabra' > dist/subdir/file.js
 > {"subdir/file.js":"subdir/file-97640ef5.js"}
 ```
 
+### Integrations
+
+**[replaceinfiles](https://github.com/songkick/replaceinfiles)**
+
+Now that your assets have been renamed, you might want to update references to them in some other files _(ex:background image reference in your css files)_. That's exactly what `replaceinfiles` is made for. Just pipe it to `hashmark`. _It just work™._ [Full example](https://github.com/songkick/replaceinfiles/tree/master/examples/hashmark).
+
 ### Programmatically
 
 The hashmark function can be used programmatically. You can pass it a String,
