@@ -1,5 +1,7 @@
 # HashMark
 
+[![Build Status](https://travis-ci.org/keithamus/hashmark.svg)](https://travis-ci.org/keithamus/hashmark)
+
 HashMark is a small utility which takes a file (or sdtin) as input, and writes
 the contents of the input to a file named with a hash digest of the file. This
 is useful for cache busting sticky caches - files can have far future expires
