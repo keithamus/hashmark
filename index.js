@@ -5,15 +5,16 @@ var EventEmitter = require('events').EventEmitter;
 var fs = require('fs');
 var path = require('path');
 
+var PATTERN_KEYS = Object.keys(path.parse('')).concat('hash');
+
 function parseFilePattern(pattern, fileName, hash) {
     pattern = pattern || '';
     fileName = fileName || '';
-    var ext = path.extname(fileName);
-    return pattern
-        .replace('{dir}', path.dirname(fileName))
-        .replace('{hash}', hash)
-        .replace('{name}', path.basename(fileName, ext))
-        .replace('{ext}', ext);
+    var values = path.parse(fileName);
+    values.hash = hash;
+    return PATTERN_KEYS.reduce(function(newFilePath, key) {
+      return newFilePath.replace('{' + key + '}', values[key]);
+    }, pattern);
 }
 
 module.exports = function hashmark(contents, options, callback) {

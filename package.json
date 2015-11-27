@@ -6,6 +6,9 @@
   "bin": {
     "hashmark": "./bin/hashmark"
   },
+  "engines": {
+    "node": ">0.10"
+  },
   "scripts": {
     "test1": "echo Foo | ./bin/hashmark 'test.{hash}.js' && rm test.3eae1599bb7f187b86d6427942d172ba8dd7ee5962aab03e0839ad9d59c37eb0.js",
     "test2": "echo Foo | ./bin/hashmark -l 8 'test.{hash}.js' && rm test.3eae1599.js",
@@ -22,7 +25,8 @@
     "test13": "echo abracadabra > test.js && ./bin/hashmark -d md5 -l 8 -r test.js '{name}-{hash}{ext}' && test ! -f test.js && rm test-97640ef5.js",
     "test14": "mkdir -p testdir/sub && echo Test1 > testdir/sub/test.js && echo Test2 > test2.js && ./bin/hashmark -d md5 -l 4 'testdir/**/*.js' 'test*.js' '{name}-{hash}{ext}' && rm testdir/sub/test.js test2.js test-fa02.js test2-856b.js && rmdir -p testdir/sub",
     "test15": "mkdir -p testdir/sub && echo Test1 > testdir/sub/test.js && echo Test2 > testdir/sub/test2.js && ./bin/hashmark -d md5 -l 4 --cwd 'testdir' 'sub/*.js' '{dir}/{name}-{hash}{ext}' && rm testdir/sub/test.js testdir/sub/test2.js testdir/sub/test-fa02.js testdir/sub/test2-856b.js && rmdir -p testdir/sub",
-    "test": "for i in $(seq 1 15); do npm run test$i; done"
+    "test16": "echo Foo > test.js && ./bin/hashmark -d md5 -l 8 test.js '{hash}-{base}' && rm test.js cbd8f798-test.js",
+    "test": "for i in $(seq 1 16); do npm run test$i; done"
   },
   "author": "Keith Cirkel (http://keithcirkel.co.uk)",
   "license": "MIT",
