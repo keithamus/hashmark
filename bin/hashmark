@@ -80,7 +80,7 @@ if (!cli.args.length) {
                     return map;
                 }, map);
             }
-            fs.writeFileSync(cli.options['asset-map'], JSON.stringify(map, null, 2));
+            fs.writeFileSync(cli.options['asset-map'], JSON.stringify(map, null, 2).replace(/\\\\/g,'/'));
         }
     });
 }
