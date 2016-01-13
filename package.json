@@ -26,7 +26,8 @@
     "test14": "mkdir -p testdir/sub && echo Test1 > testdir/sub/test.js && echo Test2 > test2.js && ./bin/hashmark -d md5 -l 4 'testdir/**/*.js' 'test*.js' '{name}-{hash}{ext}' && rm testdir/sub/test.js test2.js test-fa02.js test2-856b.js && rmdir -p testdir/sub",
     "test15": "mkdir -p testdir/sub && echo Test1 > testdir/sub/test.js && echo Test2 > testdir/sub/test2.js && ./bin/hashmark -d md5 -l 4 --cwd 'testdir' 'sub/*.js' '{dir}/{name}-{hash}{ext}' && rm testdir/sub/test.js testdir/sub/test2.js testdir/sub/test-fa02.js testdir/sub/test2-856b.js && rmdir -p testdir/sub",
     "test16": "echo Foo > test.js && ./bin/hashmark -d md5 -l 8 test.js '{hash}-{base}' && rm test.js cbd8f798-test.js",
-    "test": "for i in $(seq 1 16); do npm run test$i; done"
+    "test17": "mkdir -p testdir/sub/nested && echo Test1 > testdir/sub/test.js && echo Test2 > testdir/sub/test2.js && ./bin/hashmark -d md5 -l 4 --cwd 'testdir' 'sub/*' '{dir}/{name}-{hash}{ext}' && rm testdir/sub/test.js testdir/sub/test2.js testdir/sub/test-fa02.js testdir/sub/test2-856b.js && rmdir -p testdir/sub/nested",
+    "test": "for i in $(seq 1 17); do npm run test$i; done"
   },
   "author": "Keith Cirkel (http://keithcirkel.co.uk)",
   "license": "MIT",
