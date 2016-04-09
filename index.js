@@ -7,10 +7,11 @@ var path = require('path');
 
 var PATTERN_KEYS = Object.keys(path.parse('')).concat('hash');
 
-function parseFilePattern(pattern, fileName, hash) {
+function parseFilePattern(pattern, fileName, cwd, hash) {
     pattern = pattern || '';
     fileName = fileName || '';
     var values = path.parse(fileName);
+    values.dir = path.relative(cwd, values.dir);
     values.hash = hash;
     return PATTERN_KEYS.reduce(function(newFilePath, key) {
       return newFilePath.replace('{' + key + '}', values[key]);
@@ -69,7 +70,8 @@ module.exports = function hashmark(contents, options, callback) {
                 digest = digest.slice(0, options.length);
             }
             if (options.pattern) {
-                var fileName = parseFilePattern(options.pattern, stream.fileName, digest);
+                var fileName = path.resolve(options.cwd,
+                    parseFilePattern(options.pattern, stream.fileName, options.cwd, digest));
 
                 if (options.rename === true ) {
                     fs.rename(stream.fileName, fileName, function (err) {

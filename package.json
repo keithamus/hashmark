@@ -27,7 +27,9 @@
     "test15": "mkdir -p testdir/sub && echo Test1 > testdir/sub/test.js && echo Test2 > testdir/sub/test2.js && ./bin/hashmark -d md5 -l 4 --cwd 'testdir' 'sub/*.js' '{dir}/{name}-{hash}{ext}' && rm testdir/sub/test.js testdir/sub/test2.js testdir/sub/test-fa02.js testdir/sub/test2-856b.js && rmdir -p testdir/sub",
     "test16": "echo Foo > test.js && ./bin/hashmark -d md5 -l 8 test.js '{hash}-{base}' && rm test.js cbd8f798-test.js",
     "test17": "mkdir -p testdir/sub/nested && echo Test1 > testdir/sub/test.js && echo Test2 > testdir/sub/test2.js && ./bin/hashmark -d md5 -l 4 --cwd 'testdir' 'sub/*' '{dir}/{name}-{hash}{ext}' && rm testdir/sub/test.js testdir/sub/test2.js testdir/sub/test-fa02.js testdir/sub/test2-856b.js && rmdir -p testdir/sub/nested",
-    "test": "for i in $(seq 1 17); do npm run test$i; done"
+    "test18": "mkdir -p testdir/sub && echo 'Test --cwd without {dir} in pattern' > testdir/sub/test.js && echo Test2 > testdir/sub/test2.js && ./bin/hashmark -d md5 -l 4 --cwd 'testdir/sub' '*' '{name}-{hash}{ext}' && rm testdir/sub/test.js testdir/sub/test2.js testdir/sub/test-84c5.js testdir/sub/test2-856b.js && rmdir -p testdir/sub",
+    "test19": "mkdir -p testdir/sub && echo 'Test --cwd and --asset-map' > testdir/sub/test.js && ./bin/hashmark -l 4 --cwd 'testdir/sub' --asset-map assets.json '*' '{name}-{hash}{ext}' && (grep -e '\"test\\.js\":\\s*\"test-7068.js\"' testdir/sub/assets.json || (echo '\nWrong content in asset-map file' 1>&2; exit 1)) && rm testdir/sub/assets.json && rm -rf testdir",
+    "test": "for i in $(seq 1 19); do rm -rf testdir; npm run test$i; done"
   },
   "author": "Keith Cirkel (http://keithcirkel.co.uk)",
   "license": "MIT",
