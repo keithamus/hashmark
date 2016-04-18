@@ -11,8 +11,9 @@ var PATTERN_KEYS = Object.keys(path.parse('')).concat('hash');
 function parseFilePattern(options, fileName, hash, cwd) {
     var pattern = options.pattern || '';
     var cwd = options.cwd || './';
+    var srcPath = options['src-base'] || './';
     fileName = fileName || '';
-    var resolved = path.relative(cwd, fileName);
+    var resolved = path.relative(cwd, path.relative(srcPath, fileName));
     var values = path.parse(resolved);
     values.hash = hash;
     return PATTERN_KEYS.reduce(function(newFilePath, key) {
@@ -74,7 +75,6 @@ module.exports = function hashmark(contents, options, callback) {
             if (options.pattern) {
                 var fileName = parseFilePattern(options, stream.fileName, digest);
                 var distName = path.parse(fileName).dir;
-
                 mkdirp(distName, function(){
                   if (options.rename === true ) {
                       fs.rename(stream.fileName, fileName, function (err) {
