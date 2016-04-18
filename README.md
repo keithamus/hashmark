@@ -72,6 +72,15 @@ echo 'abracadabra' > dist/subdir/file.js
 > {"subdir/file.js":"subdir/file-97640ef5.js"}
 ```
 
+You can specify the source base folder with `--src-base`, or `-b`. It can be useful to
+
+```bash
+mkdir -p src/images/image1.png
+echo 'abracadabra' > src/images/image1.png
+./bin/hashmark --src-base src -d md5 -l 8 'images/**' 'dist/{dir}/{name}-{hash}{ext}'
+> {"src/images/image1.png":"dist/images/image1-97640ef5.png"}
+```
+
 ### Integrations
 
 **[replaceinfiles](https://github.com/songkick/replaceinfiles)**
