@@ -24,15 +24,16 @@
     "test12": "echo Test1 | ./bin/hashmark -l 4 -n test.js '{name}-{hash}{ext}' && rm test-7e5e.js",
     "test13": "echo abracadabra > test.js && ./bin/hashmark -d md5 -l 8 -r test.js '{name}-{hash}{ext}' && test ! -f test.js && rm test-97640ef5.js",
     "test14": "mkdir -p testdir/sub && echo Test1 > testdir/sub/test.js && echo Test2 > test2.js && ./bin/hashmark -d md5 -l 4 'testdir/**/*.js' 'test*.js' '{name}-{hash}{ext}' && rm testdir/sub/test.js test2.js test-fa02.js test2-856b.js && rmdir -p testdir/sub",
-    "test15": "mkdir -p testdir/sub && echo Test1 > testdir/sub/test.js && echo Test2 > testdir/sub/test2.js && ./bin/hashmark -d md5 -l 4 --cwd 'testdir' 'sub/*.js' '{dir}/{name}-{hash}{ext}' && rm testdir/sub/test.js testdir/sub/test2.js testdir/sub/test-fa02.js testdir/sub/test2-856b.js && rmdir -p testdir/sub",
+    "test15": "mkdir -p testdir/sub && echo Test1 > testdir/sub/test.js && echo Test2 > testdir/sub/test2.js && ./bin/hashmark -d md5 -l 4 --cwd 'testdir' 'sub/*.js' '{dir}/{name}-{hash}{ext}' && rm testdir/sub/test.js testdir/sub/test2.js sub/test-fa02.js sub/test2-856b.js && rmdir -p testdir/sub sub",
     "test16": "echo Foo > test.js && ./bin/hashmark -d md5 -l 8 test.js '{hash}-{base}' && rm test.js cbd8f798-test.js",
-    "test17": "mkdir -p testdir/sub/nested && echo Test1 > testdir/sub/test.js && echo Test2 > testdir/sub/test2.js && ./bin/hashmark -d md5 -l 4 --cwd 'testdir' 'sub/*' '{dir}/{name}-{hash}{ext}' && rm testdir/sub/test.js testdir/sub/test2.js testdir/sub/test-fa02.js testdir/sub/test2-856b.js && rmdir -p testdir/sub/nested",
+    "test17": "mkdir -p testdir/sub && echo Test1 > testdir/sub/test.js && echo Test2 > testdir/sub/test2.js && ./bin/hashmark -d md5 -l 4 --cwd 'testdir' 'sub/*' 'otherDir/{dir}/{name}-{hash}{ext}' && rm testdir/sub/test.js testdir/sub/test2.js otherDir/sub/test-fa02.js otherDir/sub/test2-856b.js && rm -rf testdir/sub otherDir",
     "test": "for i in $(seq 1 17); do npm run test$i; done"
   },
   "author": "Keith Cirkel (http://keithcirkel.co.uk)",
   "license": "MIT",
   "dependencies": {
-    "cli": "^0.6.5"
+    "cli": "^0.6.5",
+    "mkdirp": "^0.5.1"
   },
   "repository": {
     "type": "git",

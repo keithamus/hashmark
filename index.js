@@ -4,13 +4,16 @@ var crypto = require('crypto');
 var EventEmitter = require('events').EventEmitter;
 var fs = require('fs');
 var path = require('path');
+var mkdirp = require('mkdirp');
 
 var PATTERN_KEYS = Object.keys(path.parse('')).concat('hash');
 
-function parseFilePattern(pattern, fileName, hash) {
-    pattern = pattern || '';
+function parseFilePattern(options, fileName, hash, cwd) {
+    var pattern = options.pattern || '';
+    var cwd = options.cwd || './';
     fileName = fileName || '';
-    var values = path.parse(fileName);
+    var resolved = path.relative(cwd, fileName);
+    var values = path.parse(resolved);
     values.hash = hash;
     return PATTERN_KEYS.reduce(function(newFilePath, key) {
       return newFilePath.replace('{' + key + '}', values[key]);
@@ -69,24 +72,26 @@ module.exports = function hashmark(contents, options, callback) {
                 digest = digest.slice(0, options.length);
             }
             if (options.pattern) {
-                var fileName = parseFilePattern(options.pattern, stream.fileName, digest);
+                var fileName = parseFilePattern(options, stream.fileName, digest);
+                var distName = path.parse(fileName).dir;
 
-                if (options.rename === true ) {
-                    fs.rename(stream.fileName, fileName, function (err) {
-                        if (err) {
-                            return mapEvents.emit('error', err);
-                        }
-                        mapEvents.emit('file', stream.fileName, fileName);
-                    });
-                } else {
-                    fs.writeFile(fileName, contents, function (err) {
-                        if (err) {
-                            return mapEvents.emit('error', err);
-                        }
-                        mapEvents.emit('file', stream.fileName, fileName);
-                    });
-                }
-
+                mkdirp(distName, function(){
+                  if (options.rename === true ) {
+                      fs.rename(stream.fileName, fileName, function (err) {
+                          if (err) {
+                              return mapEvents.emit('error', err);
+                          }
+                          mapEvents.emit('file', stream.fileName, fileName);
+                      });
+                  } else {
+                      fs.writeFile(fileName, contents, function (err) {
+                          if (err) {
+                              return mapEvents.emit('error', err);
+                          }
+                          mapEvents.emit('file', stream.fileName, fileName);
+                      });
+                  }
+                })
             } else {
                 mapEvents.emit('file', stream.fileName, digest);
             }
