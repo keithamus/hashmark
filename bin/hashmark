@@ -69,18 +69,20 @@ if (!cli.args.length) {
     }
     hash(files, cli.options).on('end', function (map) {
         // Output hash
+        var assetMapPath = cli.options['asset-map'];
         if (!cli.options.silent) {
             process.stdout.write(JSON.stringify(map));
         }
-        if (cli.options['asset-map']) {
+        if (assetMapPath) {
+            assetMapPath = path.join(cli.options.cwd, assetMapPath);
             if (fs.existsSync(cli.options['asset-map'])) {
-                var assetMap = JSON.parse(fs.readFileSync(cli.options['asset-map']));
+                var assetMap = JSON.parse(fs.readFileSync(assetMapPath));
                 Object.keys(assetMap).reduce(function (map, key) {
                     map[key] = map[key] || assetMap[key];
                     return map;
                 }, map);
             }
-            fs.writeFileSync(cli.options['asset-map'], JSON.stringify(map, null, 2));
+            fs.writeFileSync(assetMapPath, JSON.stringify(map, null, 2));
         }
     });
 }
