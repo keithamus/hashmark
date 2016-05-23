@@ -83,5 +83,6 @@ if (!cli.args.length) {
                 }, map);
             }
             fs.writeFileSync(assetMapPath, JSON.stringify(map, null, 2).replace(/\\\\/g,'/'));
+        }
     });
 }
