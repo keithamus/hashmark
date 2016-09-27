@@ -34,7 +34,7 @@
   "author": "Keith Cirkel (http://keithcirkel.co.uk)",
   "license": "MIT",
   "dependencies": {
-    "cli": "^0.6.5"
+    "cli": "^1.0.0"
   },
   "repository": {
     "type": "git",
