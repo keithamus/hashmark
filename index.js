@@ -4,6 +4,7 @@ var crypto = require('crypto');
 var EventEmitter = require('events').EventEmitter;
 var fs = require('fs');
 var path = require('path');
+var mkdirp = require('mkdirp');
 
 var PATTERN_KEYS = Object.keys(path.parse('')).concat('hash');
 
@@ -81,11 +82,17 @@ module.exports = function hashmark(contents, options, callback) {
                         mapEvents.emit('file', stream.fileName, fileName);
                     });
                 } else {
-                    fs.writeFile(fileName, contents, function (err) {
+                    mkdirp(path.dirname(fileName), function (err) {
                         if (err) {
                             return mapEvents.emit('error', err);
-                        }
-                        mapEvents.emit('file', stream.fileName, fileName);
+                        } else {
+                            fs.writeFile(fileName, contents, function (err) {
+                                if (err) {
+                                    return mapEvents.emit('error', err);
+                                }
+                                mapEvents.emit('file', stream.fileName, fileName);
+                            });
+                        }     
                     });
                 }
 
