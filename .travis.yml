@@ -15,7 +15,3 @@ script:
 - npm t
 after_success:
 - travis-after-all && npm run semantic-release
-env:
-  global:
-  - secure: "ZSFeFU2zq5Xopq/83kJGhKaILd6JwDbjSOsBKTilfA4M+FmhIXFU8mcXp+OQj2BTcsPLtmbIRmj2knEPzhBtA+OyUs3TscpATvHSszV+KDLIJgC2toVbBZBtri0jPxywqLacB+9FSNMp0f4Ox4TJkHp6RNT8LPSXOTV9nx/r+5M="
-  - secure: "MLyopkUpoTX6+YTheIRo67eJ+hqzDTPwGb2kBHL0iJgQdl1GlrfZlZx1zgb9sJMX020JODeHoYqXKbrV0blZfhiLOkZx0F2gXXfLLV5i2zGoFFjY5ta2ADxYM70W5pqyDaisqLjxlQv7HKcV7WIeWJ1jOU0Ulo/wh4opM02i4qQ="
