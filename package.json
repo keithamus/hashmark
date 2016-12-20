@@ -46,7 +46,7 @@
     "mkdirp": "^0.5.1"
   },
   "devDependencies": {
-    "ghooks": "^1.2.1",
+    "ghooks": "^2.0.0",
     "semantic-release": "^4.3.5",
     "travis-after-all": "^1.4.4",
     "validate-commit-msg": "^2.6.1"
