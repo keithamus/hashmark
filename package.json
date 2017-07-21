@@ -14,7 +14,7 @@
   },
   "scripts": {
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
-    "test": "for i in $(seq 1 20); do rm -rf testdir; npm run test$i; done",
+    "test": "for i in $(seq 1 21); do rm -rf testdir; npm run test$i; done",
     "test1": "echo Foo | ./bin/hashmark 'test.{hash}.js' && rm test.3eae1599bb7f187b86d6427942d172ba8dd7ee5962aab03e0839ad9d59c37eb0.js",
     "test2": "echo Foo | ./bin/hashmark -l 8 'test.{hash}.js' && rm test.3eae1599.js",
     "test3": "echo Bar | ./bin/hashmark -l 8 'test.{hash}.js' && rm test.842c8886.js",
@@ -34,7 +34,8 @@
     "test17": "mkdir -p testdir/sub/nested && echo Test1 > testdir/sub/test.js && echo Test2 > testdir/sub/test2.js && ./bin/hashmark -d md5 -l 4 --cwd 'testdir' 'sub/*' '{dir}/{name}-{hash}{ext}' && rm testdir/sub/test.js testdir/sub/test2.js testdir/sub/test-fa02.js testdir/sub/test2-856b.js && rmdir -p testdir/sub/nested",
     "test18": "mkdir -p testdir/sub && echo 'Test --cwd without {dir} in pattern' > testdir/sub/test.js && echo Test2 > testdir/sub/test2.js && ./bin/hashmark -d md5 -l 4 --cwd 'testdir/sub' '*' '{name}-{hash}{ext}' && rm testdir/sub/test.js testdir/sub/test2.js testdir/sub/test-84c5.js testdir/sub/test2-856b.js && rmdir -p testdir/sub",
     "test19": "mkdir -p testdir/sub && echo 'Test --cwd and --asset-map' > testdir/sub/test.js && ./bin/hashmark -l 4 --cwd 'testdir/sub' --asset-map assets.json '*' '{name}-{hash}{ext}' && (grep -e '\"test\\.js\":\\s*\"test-7068.js\"' testdir/sub/assets.json || (echo '\nWrong content in asset-map file' 1>&2; exit 1)) && rm testdir/sub/assets.json && rm -rf testdir",
-    "test20": "echo 'Create and write file if the directory does not exist' | ./bin/hashmark 'newtestdir/newtestsubdir/test.{hash}.js' && rm -rf newtestdir"
+    "test20": "mkdir -p testdir/sub/subsub && echo 'Test --cwd and --asset-map with existing map' > testdir/sub/subsub/test.js && echo '{\"existing\": \"some-file.js\"}' > testdir/sub/assets.json && ./bin/hashmark -l 4 --cwd 'testdir/sub' --asset-map assets.json 'subsub/*' 'subsub/{name}-{hash}{ext}' && ((grep -e '\"subsub/test\\.js\":\\s*\"subsub/test-f8fa.js\"' testdir/sub/assets.json && grep -e '\"existing\":\\s*\"some-file\\.js\"' testdir/sub/assets.json) || (echo '\nWrong content in asset-map file' 1>&2; exit 1)) && rm testdir/sub/assets.json && rm -rf testdir",
+    "test21": "echo 'Create and write file if the directory does not exist' | ./bin/hashmark 'newtestdir/newtestsubdir/test.{hash}.js' && rm -rf newtestdir"
   },
   "config": {
     "ghooks": {
@@ -46,12 +47,12 @@
     "mkdirp": "^0.5.1"
   },
   "devDependencies": {
-    "ghooks": "^1.2.1",
+    "ghooks": "^2.0.0",
     "semantic-release": "^6.3.2",
     "travis-after-all": "^1.4.4",
     "validate-commit-msg": "^2.6.1"
   },
   "engines": {
-    "node": ">0.10"
+    "node": ">=4"
   }
 }
