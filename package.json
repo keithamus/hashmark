@@ -50,7 +50,7 @@
     "ghooks": "^2.0.0",
     "semantic-release": "^6.3.2",
     "travis-after-all": "^1.4.4",
-    "validate-commit-msg": "^2.13.0"
+    "validate-commit-msg": "^2.13.1"
   },
   "engines": {
     "node": ">=4"
