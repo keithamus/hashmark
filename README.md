@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.org/keithamus/hashmark.svg)](https://travis-ci.org/keithamus/hashmark)
 
+<a target='_blank' rel='nofollow' href='https://app.codesponsor.io/link/ygkcNhfZ9nTDeVM6P8LSGn1C/keithamus/hashmark'>  <img alt='Sponsor' width='888' height='68' src='https://app.codesponsor.io/embed/ygkcNhfZ9nTDeVM6P8LSGn1C/keithamus/hashmark.svg' /></a>
+
 HashMark is a small utility which takes a file (or sdtin) as input, and writes
 the contents of the input to a file named with a hash digest of the file. This
 is useful for cache busting sticky caches - files can have far future expires
