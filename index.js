@@ -86,12 +86,16 @@ module.exports = function hashmark(contents, options, callback) {
                         if (err) {
                             return mapEvents.emit('error', err);
                         } else {
-                            fs.writeFile(fileName, contents, function (err) {
-                                if (err) {
-                                    return mapEvents.emit('error', err);
-                                }
+                            if (options.hashOnly) {
                                 mapEvents.emit('file', stream.fileName, fileName);
-                            });
+                            } else {
+                                fs.writeFile(fileName, contents, function (err) {
+                                    if (err) {
+                                        return mapEvents.emit('error', err);
+                                    }
+                                    mapEvents.emit('file', stream.fileName, fileName);
+                                });
+                            }
                         }     
                     });
                 }

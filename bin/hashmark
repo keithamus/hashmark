@@ -52,6 +52,12 @@ cli
             'boolean',
             false
         ],
+        'hashOnly': [
+            'h',
+            'Skip writing files and only output map of replacements',
+            'boolean',
+            false
+        ],
     });
 
 if (!cli.args.length) {

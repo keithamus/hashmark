@@ -23,6 +23,8 @@ cat file.js | ./bin/hashmark -l 8 'file.{hash}.js' # Writes to test.3eae1599.js
 cat file.js | ./bin/hashmark -l 4 -d md5 'dist/{hash}.js' # Writes to dist/cbd8.js
 > Computed hash: cbd8
 >
+cat file.js | ./bin/hashmark -l 8 -h 'file.js?{hash}' # Does not write to file. Only computes hash. Can be used for query parameter cache busting (file.js?3eae1599)
+> Computed hash: 3eae1599
 ```
 
 It is useful to use globs — meaning you can read in many files and it will output
