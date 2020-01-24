@@ -44,7 +44,7 @@
   },
   "dependencies": {
     "cli": "^1.0.0",
-    "mkdirp": "^0.5.1"
+    "mkdirp": "^1.0.0"
   },
   "devDependencies": {
     "ghooks": "^2.0.0",
